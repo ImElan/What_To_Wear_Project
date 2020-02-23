@@ -78,6 +78,8 @@
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         android:text="Your Picks For the Weather"/>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

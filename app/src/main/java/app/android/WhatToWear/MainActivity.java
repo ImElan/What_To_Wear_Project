@@ -117,105 +117,120 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         if(mAuth.getCurrentUser() != null) {
+
             getLocationPermission();
 
-
-            mDatabase.child("Users").child(user_id).child("LatitudeAndLongitude").addValueEventListener(new ValueEventListener() {
+            mDatabase.child("Users").child(user_id).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String key = dataSnapshot.child("location").getValue().toString();
 
-                    latitude = dataSnapshot.child("latitude").getValue().toString();
-                    longitude = dataSnapshot.child("longitude").getValue().toString();
-                    Log.d("LAT_LNG_CHECK", "Latitude:" + latitude + " Longitude:" + longitude);
+                    if(!TextUtils.isEmpty(key) && !key.equals("empty"))
+                    {
+                        mDatabase.child("Users").child(user_id).child("LatitudeAndLongitude").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    mProgress.setTitle("Determining the Clothes based on your location");
-                    mProgress.setMessage("Please wait while we search through your wardrobe ..!");
-                    mProgress.setCanceledOnTouchOutside(false);
-                    mProgress.show();
+                                latitude = dataSnapshot.child("latitude").getValue().toString();
+                                longitude = dataSnapshot.child("longitude").getValue().toString();
+                                Log.d("LAT_LNG_CHECK", "Latitude:" + latitude + " Longitude:" + longitude);
 
-                    getWeatherData(latitude, longitude);
+                                mProgress.setTitle("Determining the Clothes based on your location");
+                                mProgress.setMessage("Please wait while we search through your wardrobe ..!");
+                                mProgress.setCanceledOnTouchOutside(false);
+                                mProgress.show();
+
+                                getWeatherData(latitude, longitude);
 
 
-                    Map climateMap = new HashMap<>();
-                    climateMap.put("main", main);
-                    climateMap.put("description", description);
-                    climateMap.put("humidity", humidity);
-                    climateMap.put("windSpeed", windSpeed);
-                    climateMap.put("temperature", temperature);
-                    climateMap.put("place", name);
+                                Map climateMap = new HashMap<>();
+                                climateMap.put("main", main);
+                                climateMap.put("description", description);
+                                climateMap.put("humidity", humidity);
+                                climateMap.put("windSpeed", windSpeed);
+                                climateMap.put("temperature", temperature);
+                                climateMap.put("place", name);
 
-                    mDatabase.child("Climate").child(user_id).updateChildren(climateMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            // FETCH AND DISPLAY THE CLOTHES BASED ON CLIMATE
-                            mDatabase.child("Climate").child(user_id).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    String climate = dataSnapshot.child("main").getValue().toString();
-                                    climate = climate.toLowerCase();
-                                    switch (climate) {
-                                        case "rain":
-                                            keyToFilter = "Rainy";
-                                            break;
-                                        case "clouds":
-                                            keyToFilter = "Cloudy";
-                                            break;
-                                        case "clear":
-                                            keyToFilter = "Clear Sky";
-                                            break;
-                                        default:
-                                            keyToFilter = "Sunny";
-                                            break;
-                                    }
-                                    LocationText.setText(name);
-                                    ClimateText.setText(keyToFilter);
-                                    Log.d("FOUND_CLIMATE", climate);
-                                    mDatabase.child("WardRobe").child(user_id).addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                            wardRobeList.clear();
-                                            Log.d("FOUND_CLIMATE", "Preparing to display the list....");
+                                mDatabase.child("Climate").child(user_id).updateChildren(climateMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        // FETCH AND DISPLAY THE CLOTHES BASED ON CLIMATE
+                                        mDatabase.child("Climate").child(user_id).addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                String climate = dataSnapshot.child("main").getValue().toString();
+                                                climate = climate.toLowerCase();
+                                                switch (climate) {
+                                                    case "rain":
+                                                        keyToFilter = "Rainy";
+                                                        break;
+                                                    case "clouds":
+                                                        keyToFilter = "Cloudy";
+                                                        break;
+                                                    case "clear":
+                                                        keyToFilter = "Clear Sky";
+                                                        break;
+                                                    default:
+                                                        keyToFilter = "Sunny";
+                                                        break;
+                                                }
+                                                LocationText.setText(name);
+                                                ClimateText.setText(keyToFilter);
+                                                Log.d("FOUND_CLIMATE", climate);
+                                                mDatabase.child("WardRobe").child(user_id).addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                        wardRobeList.clear();
+                                                        Log.d("FOUND_CLIMATE", "Preparing to display the list....");
 
-                                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                                // TO DISPLAY ALL
+                                                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                                            // TO DISPLAY ALL
                                            /* WardRobeClass singleDress = ds.getValue(WardRobeClass.class);
                                             wardRobeList.add(singleDress);
                                             wardRobeAdapter = new WardRobeAdapter(MainActivity.this,wardRobeList);
                                             mRecycler.setAdapter(wardRobeAdapter); */
 
-                                                // FILTERING BASED ON CLIMATE
-                                                WardRobeClass singleDress = ds.getValue(WardRobeClass.class);
-                                                String currentClimate = singleDress.getClimate();
-                                                if (currentClimate.equals(keyToFilter)) {
-                                                    wardRobeList.add(singleDress);
-                                                    wardRobeAdapter = new WardRobeAdapter(MainActivity.this, wardRobeList);
-                                                    mRecycler.setAdapter(wardRobeAdapter);
-                                                }
+                                                            // FILTERING BASED ON CLIMATE
+                                                            WardRobeClass singleDress = ds.getValue(WardRobeClass.class);
+                                                            String currentClimate = singleDress.getClimate();
+                                                            if (currentClimate.equals(keyToFilter)) {
+                                                                wardRobeList.add(singleDress);
+                                                                wardRobeAdapter = new WardRobeAdapter(MainActivity.this, wardRobeList);
+                                                                mRecycler.setAdapter(wardRobeAdapter);
+                                                            }
+
+                                                        }
+                                                        mProgress.dismiss();
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                    }
+                                                });
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
                                             }
-                                            mProgress.dismiss();
-                                        }
+                                        });
+                                    }
+                                });
+                                //Log.d("RETRIEVED_DATA",main);
+                                //Log.d("RETRIEVED_DATA",description);
+                                //Log.d("RETRIEVED_DATA",temperature);
+                                //Log.d("RETRIEVED_DATA",humidity);
+                                //Log.d("RETRIEVED_DATA",windSpeed);
+                                //Log.d("RETRIEVED_DATA",name);
+                            }
 
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-                        }
-                    });
-                    //Log.d("RETRIEVED_DATA",main);
-                    //Log.d("RETRIEVED_DATA",description);
-                    //Log.d("RETRIEVED_DATA",temperature);
-                    //Log.d("RETRIEVED_DATA",humidity);
-                    //Log.d("RETRIEVED_DATA",windSpeed);
-                    //Log.d("RETRIEVED_DATA",name);
+                            }
+                        });
+                    }
                 }
 
                 @Override
