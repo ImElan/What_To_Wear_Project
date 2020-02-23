@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:gravity="center"
+    tools:context=".LoginActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Welcome"
+        android:textColor="#FFFFFF"
+        android:textSize="45sp"
+        android:layout_marginBottom="15dp"/>
+
+    <TextView
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="&quot;Fashion is not necessarily about labels. It's not about brands. It's about something else that comes from within you.&quot;"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="30dp"
+        android:textSize="15sp"/>
+
+    <LinearLayout
+        android:background="@drawable/search_bar_background"
+        android:orientation="vertical"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SIGN IN"
+            android:textSize="20sp"
+            android:textColor="#6989F9"
+            android:textStyle="bold"/>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_mail"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+            <EditText
+                android:id="@+id/email_id"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Email Address"/>
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_password"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+            <EditText
+                android:id="@+id/password_id"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="Password"/>
+        </LinearLayout>
+        <Button
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/sign_in_button"
+            android:text="Login"
+            android:id="@+id/sign_in"
+            android:layout_marginTop="5dp"
+            android:textColor="#FFFFFF"/>
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Don't have an account ?"
+                android:textSize="16sp"
+                android:textColor="#000000" />
+            <TextView
+                android:id="@+id/sign_up_id"
+                android:layout_marginStart="5dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign up"
+                android:textSize="16sp"
+                android:textColor="#EC5252" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">What To Wear</string>
+
+    <string-array name="types">
+        <item>Shirts</item>
+        <item>Trousers</item>
+        <item>Coats</item>
+        <item>Jackets</item>
+        <item>Sweat Shirts</item>
+        <item>Hoodies</item>
+        <item>Shoes</item>
+        <item>Accessories</item>
+    </string-array>
+
+    <string-array name="climate">
+        <item>Sunny</item>
+        <item>Cloudy</item>
+        <item>Rainy</item>
+        <item>Clear Sky</item>
+    </string-array>
+
+    <string-array name="categories">
+        <item>Top</item>
+        <item>Bottom</item>
+        <item>Hand</item>
+        <item>Feet</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1067463788344",
+    "firebase_url": "https://sunny-studio-268917.firebaseio.com",
+    "project_id": "sunny-studio-268917",
+    "storage_bucket": "sunny-studio-268917.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067463788344:android:e0908a2d787ac970d1e3cd",
+        "android_client_info": {
+          "package_name": "app.android.WhatToWear"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1067463788344-nmtl5hge5n7guiogofkh3pre44u5ophr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.android.WhatToWear",
+            "certificate_hash": "78b2018f063d31c218b467dd0c1ec3ffa92daf84"
+          }
+        },
+        {
+          "client_id": "1067463788344-j9243ed90ietr8kkjc8qe3n2q4ce877h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyioHB86iLtKZgJF82NQbUBUnfZmxCIAc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1067463788344-j9243ed90ietr8kkjc8qe3n2q4ce877h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
