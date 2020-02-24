@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView ClimateText;
 
     public MainActivity() {
+
     }
 
     @Override
@@ -101,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Log.d("SEQUENCE_CHECK","On create");
 
         Toolbar mToolBar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolBar);
@@ -126,17 +129,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getLocationPermission() {
-        Log.d(TAG, "getLocationPermission: getting location permissions");
+        Log.d("SEQUENCE_CHECK", "getLocationPermission: getting location permissions");
         String[] permissions = { Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION};
 
-        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
                     COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 mLocationPermissionsGranted = true;
                 getDeviceLocation();
-            } else{
+            } else {
                 ActivityCompat.requestPermissions(this,
                         permissions,
                         LOCATION_PERMISSION_REQUEST_CODE);
@@ -150,12 +153,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.d(TAG, "onRequestPermissionsResult: called.");
+        Log.d("SEQUENCE_CHECK", "onRequestPermissionsResult: called.");
         mLocationPermissionsGranted = false;
 
-        switch(requestCode){
+        switch(requestCode) {
             case LOCATION_PERMISSION_REQUEST_CODE:{
-                if(grantResults.length > 0){
+                if(grantResults.length > 0) {
                     for(int i = 0; i < grantResults.length; i++){
                         if(grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                             mLocationPermissionsGranted = false;
@@ -200,7 +203,9 @@ public class MainActivity extends AppCompatActivity {
                                 mDatabase.child("Users").child(user_id).child("location").setValue("Filled");
                             }
                             else {
-                                // DO SOMETHING ABOUT IT
+//                                mProgress.dismiss();
+                                Log.d("SEQUENCE_CHECK", "onComplete: ");
+                                onResume();
                             }
 
                         } else {
@@ -463,6 +468,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser mCurrentUser = mAuth.getCurrentUser();
+        Log.d("SEQUENCE_CHECK","On start");
         if(mCurrentUser == null)
         {
             Intent LoginIntent = new Intent(MainActivity.this,LoginActivity.class);
@@ -601,7 +607,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "onActivityResult: called.");
+        Log.d("SEQUENCE_CHECK", "onActivityResult: called.");
+        Log.d("SEQUENCE_CHECK",mLocationPermissionsGranted+"");
         switch (requestCode) {
             case PERMISSIONS_REQUEST_ENABLE_GPS: {
                 if(mLocationPermissionsGranted){
@@ -628,6 +635,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume: Method Call");
+        Log.d("SEQUENCE_CHECK","On resume");
         if(checkMapServices()){
             if(mLocationPermissionsGranted){
                 getDeviceLocation();
@@ -637,4 +645,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+//    private void PermissionCheck()
+//    {
+//
+//    }
+
 }
