@@ -1,12 +1,7 @@
 package app.android.WhatToWear;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,15 +12,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.DecimalFormat;
 
 public class WeatherIntent extends AppCompatActivity
@@ -41,12 +27,12 @@ public class WeatherIntent extends AppCompatActivity
     private TextView DescriptionText;
     private LinearLayout mLinearLayout;
 
-    private String main = "";
-    private String description = "";
-    private String temperature = "";
-    private String humidity = "";
-    private String name = "";
-    private String windSpeed = "";
+    private String main;
+    private String description;
+    private String temperature;
+    private String humidity;
+    private String name;
+    private String windSpeed;
 
 
 
@@ -60,6 +46,7 @@ public class WeatherIntent extends AppCompatActivity
         String user_id = mUser.getUid();
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
+        mDatabaseRef.child("Climate").child(user_id).keepSynced(true);
 
         mainText = findViewById(R.id.main);
         humidityText = findViewById(R.id.humidity);
@@ -96,19 +83,25 @@ public class WeatherIntent extends AppCompatActivity
                         mLinearLayout.setBackground(getDrawable(R.drawable.sunny));
                         break;
                 }
-                main = main.substring(0,1).toUpperCase() + main.substring(1);
+                if(main.length() > 0)
+                {
+                    main = main.substring(0,1).toUpperCase() + main.substring(1);
+                }
                 mainText.setText(main);
                 humidityText.setText(humidity);
                 DescriptionText.setText(description);
                 windSpeedText.setText(windSpeed);
                 PlaceText.setText(name);
 
-                Double Doubletemperature = Double.parseDouble(temperature) - 273.15;
+                if(!temperature.isEmpty())
+                {
+                    Double Doubletemperature = Double.parseDouble(temperature) - 273.15;
 
-                DecimalFormat precision = new DecimalFormat("0.000");
-                Doubletemperature = Double.parseDouble(precision.format(Doubletemperature));
+                    DecimalFormat precision = new DecimalFormat("0.000");
+                    Doubletemperature = Double.parseDouble(precision.format(Doubletemperature));
 
-                TemperatureText.setText(""+Doubletemperature);
+                    TemperatureText.setText(""+Doubletemperature);
+                }
             }
 
             @Override
