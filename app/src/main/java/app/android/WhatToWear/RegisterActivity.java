@@ -93,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
                     userMap.put("email",email);
                     userMap.put("phone",phone);
                     userMap.put("device_token",Device_token);
-                    userMap.put("location","empty");
+//                    userMap.put("location","empty");
                     mDatabase.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

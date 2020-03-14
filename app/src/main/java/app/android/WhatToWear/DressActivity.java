@@ -138,17 +138,17 @@ public class DressActivity extends AppCompatActivity
         });
 
         TypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                TypesPosition = Integer.toString(position);
-                Type = parent.getItemAtPosition(position).toString();
-            }
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            TypesPosition = Integer.toString(position);
+            Type = parent.getItemAtPosition(position).toString();
+        }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
+        }
+    });
 
         ClimateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
